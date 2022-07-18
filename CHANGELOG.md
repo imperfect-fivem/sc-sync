@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] - yyyy-mm-dd
+The upcoming version.
+ 
+### Added
+- None.
+ 
+### Changed
+- None.
+
+### Fixed
+- None.
+
 ## [1.0.0] - 2022-07-18
 Initial version.
  
