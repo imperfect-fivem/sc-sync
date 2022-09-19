@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] - yyyy-mm-dd
+The upcoming version.
+ 
+### Added
+- Clients debug permissions.
+ 
+### Changed
+- None.
+
+### Fixed
+- None.
+
 ## [1.0.0] - 2022-07-18
 Initial version.
  
@@ -9,9 +21,3 @@ Initial version.
 - Checkers: Add & Remove (only server).
 - Privates: Get & Set (Both server and client).
 - Debug command (Both server and client).
- 
-### Changed
-- None.
-
-### Fixed
-- None.

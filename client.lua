@@ -1,12 +1,17 @@
 
 debugging = false
 
-RegisterCommand("SCSdebug", function()
-  debugging = not debugging
-  if debugging then
-    print("Enabled debugging.")
+RegisterNetEvent("sc-sync:SetDebugStatus", function(allowed)
+  if allowed then
+    debugging = not debugging
+    if debugging then
+      print("Debug enabled")
+    else
+      print("Debug disabled")
+    end
   else
-    print("Disabled debugging.")
+    debugging = false
+    print("Debug permissions refused")
   end
 end)
 

@@ -1,13 +1,27 @@
 
 debugging = false
+debuggers = {
+  ["license:xxx000"] = true,
+  ["steam:000000"] = true
+}
 
-RegisterCommand("SCSdebug", function(executer)
-  if executer == 0 then -- console
+RegisterCommand("SCSdebug", function(src)
+  if src ~= 0 then
+    local is_debugger = false
+    for _,identifier in pairs(GetPlayerIdentifiers(src)) do
+      if debuggers[identifier] then
+        is_debugger = true
+        break
+      end
+    end
+    TriggerClientEvent("sc-sync:SetDebugStatus", src, is_debugger)
+  else
+    -- console execution
     debugging = not debugging
     if debugging then
-      print("Enabled debugging.")
+      print("Debug enabled")
     else
-      print("Disabled debugging.")
+      print("Debug disabled")
     end
   end
 end)
