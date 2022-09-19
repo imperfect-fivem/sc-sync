@@ -8,7 +8,7 @@ The upcoming version.
 - Clients debug permissions.
  
 ### Changed
-- None.
+- Receiving values (returning instead of callbacks).
 
 ### Fixed
 - None.
