@@ -43,14 +43,12 @@ exports("SetGlobal", function (key, value, callback)
   debug("SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. ", callbacks[" .. tostring(index) .. "])")
 end)
 
-RegisterNetEvent("sc-sync:SetGlobal")
-AddEventHandler("sc-sync:SetGlobal", function(key, value)
+RegisterNetEvent("sc-sync:SetGlobal", function(key, value)
   globals[key] = value
   debug("Server: SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. ")")
 end)
 
-RegisterNetEvent("sc-sync:SetGlobal:Result")
-AddEventHandler("sc-sync:SetGlobal:Result", function(key, index, allowed)
+RegisterNetEvent("sc-sync:SetGlobal:Result", function(key, index, allowed)
   if callbacks[key] ~= nil then
     if callbacks[key][index] ~= nil then
       pcall(callbacks[key][index], allowed)
@@ -79,8 +77,7 @@ exports("SetPrivate", function (key, value)
   debug("SetPrivate(" .. json.encode(key) .. ", " .. json.encode(value) .. ")")
 end)
 
-RegisterNetEvent("sc-sync:SetPrivate")
-AddEventHandler("sc-sync:SetPrivate", function(key, value)
+RegisterNetEvent("sc-sync:SetPrivate", function(key, value)
   privates[key] = value
   debug("Server: SetPrivate(" .. json.encode(key) .. ", " .. json.encode(value) .. ")")
 end)

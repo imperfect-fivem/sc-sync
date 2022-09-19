@@ -34,8 +34,7 @@ end
 
 globals = {}
 
-RegisterNetEvent("sc-sync:GetGlobals")
-AddEventHandler("sc-sync:GetGlobals", function()
+RegisterNetEvent("sc-sync:GetGlobals", function()
   local client = source
   TriggerClientEvent("sc-sync:GetGlobals", client, globals)
   debug("Client[" .. json.encode(client) .. "]: GetGlobals")
@@ -75,8 +74,7 @@ exports("RemoveGlobalChecker", function (key, index)
   debug("RemoveGlobalChecker(" .. json.encode(key) .. ", " .. tostring(index) .. ")")
 end)
 
-RegisterNetEvent("sc-sync:SetGlobal")
-AddEventHandler("sc-sync:SetGlobal", function(key, value, index)
+RegisterNetEvent("sc-sync:SetGlobal", function(key, value, index)
   local client = source
   local allowed = true
   if checkers[key] ~= nil then
@@ -100,8 +98,7 @@ end)
 
 privates = {}
 
-RegisterNetEvent("sc-sync:InitializePrivate")
-AddEventHandler("sc-sync:InitializePrivate", function()
+RegisterNetEvent("sc-sync:InitializePrivate", function()
   local client = source
   privates[client] = {}
   debug("Client[" .. json.encode(client) .. "]: InitializePrivate()")
@@ -124,8 +121,7 @@ exports("SetPrivate", function (client, key, value)
   debug("SetPrivate(" .. json.encode(client) .. ", " .. json.encode(key) .. ", " .. json.encode(value) .. ")")
 end)
 
-RegisterNetEvent("sc-sync:SetPrivate")
-AddEventHandler("sc-sync:SetPrivate", function(key, value)
+RegisterNetEvent("sc-sync:SetPrivate", function(key, value)
   local client = source
   privates[client][key] = value
   debug("Client[" .. json.encode(client) .. "]: SetPrivate(" .. json.encode(key) .. ", " .. json.encode(value) .. ")")
