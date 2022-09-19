@@ -122,11 +122,11 @@ print("The weather is: " .. weather)
 ##### SetGlobal
 Set a global value using a key, example:
 ```lua
-exports["sc-sync"]:SetGlobal("weather", "clear", function(set)
+exports["sc-sync"]:SetGlobal("weather", "clear", function(set, justification)
   if set then
     print("Changed the weather successfully.")
   else
-    print("Changing the weather failed.")
+    print("Changing the weather failed, reason: " .. justification .. ".")
   end
 end)
 ```
