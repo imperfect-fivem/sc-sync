@@ -81,11 +81,13 @@ end)
 RegisterNetEvent("sc-sync:SetGlobal", function(key, value, id)
   local client = source
   local allowed = true
+  local reason
   if checkers[key] ~= nil then
     for _, checker in pairs(checkers[key]) do
-      local executed, allow = pcall(checker, client, value)
+      local executed, allow, justification = pcall(checker, client, value)
       if executed and not allow then
         allowed = false
+        reason = justification
         break
       end
     end
@@ -94,9 +96,9 @@ RegisterNetEvent("sc-sync:SetGlobal", function(key, value, id)
     globals[key] = value
     TriggerClientEvent("sc-sync:SetGlobal", -1, key, value)
   end
-  TriggerClientEvent("sc-sync:SetGlobal:Result:" .. tostring(id), client, allowed)
+  TriggerClientEvent("sc-sync:SetGlobal:Result:" .. tostring(id), client, allowed, reason)
   if debugging then
-    print("Client[" .. json.encode(client) .. "]: SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. ", " .. json.encode(id) .. "): " .. tostring(allowed))
+    print("Client[" .. json.encode(client) .. "]: SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. ", " .. json.encode(id) .. "): " .. tostring(allowed) .. ", " .. json.encode(reason))
   end
 end)
 
