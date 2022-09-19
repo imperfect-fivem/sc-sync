@@ -6,6 +6,7 @@ The upcoming version.
  
 ### Added
 - Clients debug permissions.
+- Checker disallow justification.
  
 ### Changed
 - Receiving values (returning instead of callbacks).
