@@ -19,26 +19,30 @@ globals = {}
 
 TriggerServerEvent("sc-sync:GetGlobals")
 
-callbacks = {}
-
-exports("GetGlobal", function (key, callback)
+exports("GetGlobal", function (key)
   local value = globals[key]
-  pcall(callback, value)
   if debugging then
-    print("GetGlobal(" .. json.encode(key) .. ", callback(" .. json.encode(value) .. "))")
+    print("GetGlobal(" .. json.encode(key) .. "): " .. json.encode(value))
   end
+  return value
 end)
 
 exports("SetGlobal", function (key, value, callback)
-  if callbacks[key] == nil then
-    callbacks[key] = {}
+  local id = tostring(GetGameTimer())
+  local result_handler
+  local function handleResult(allowed)
+    pcall(callback, allowed)
+    if debugging then
+      print("Server: SetGlobal.Result[" .. json.encode(id) .. "]: " .. json.encode(allowed))
+    end
+    RemoveEventHandler(result_handler)
   end
-  table.insert(callbacks[key], callback)
-  local index = #callbacks[key]
-  TriggerServerEvent("sc-sync:SetGlobal", key, value, index)
+  result_handler = AddEventHandler("sc-sync:SetGlobal:Result:" .. id, handleResult)
+  TriggerServerEvent("sc-sync:SetGlobal", key, value, id)
   if debugging then
-    print("SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. ", callbacks[" .. tostring(index) .. "])")
+    print("SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. "): " .. json.encode(id))
   end
+  return id
 end)
 
 RegisterNetEvent("sc-sync:SetGlobal", function(key, value)
@@ -48,31 +52,16 @@ RegisterNetEvent("sc-sync:SetGlobal", function(key, value)
   end
 end)
 
-RegisterNetEvent("sc-sync:SetGlobal:Result", function(key, index, allowed)
-  if callbacks[key] ~= nil then
-    if callbacks[key][index] ~= nil then
-      pcall(callbacks[key][index], allowed)
-      callbacks[key][index] = nil
-    end
-    if #callbacks[key] == 0 then
-      callbacks[key] = nil
-    end
-  end
-  if debugging then
-    print("Server: SetGlobal.Result(" .. json.encode(key) .. ", " .. json.encode(index) .. ", " .. json.encode(allowed) .. ")")
-  end
-end)
-
 privates = {}
 
 TriggerServerEvent("sc-sync:InitializePrivate")
 
-exports("GetPrivate", function (key, callback)
+exports("GetPrivate", function (key)
   local value = privates[key]
-  pcall(callback, value)
   if debugging then
-    print("GetPrivate(" .. json.encode(key) .. ", callback(" .. json.encode(value) .. "))")
+    print("GetPrivate(" .. json.encode(key) .. "): " .. json.encode(value))
   end
+  return value
 end)
 
 exports("SetPrivate", function (key, value)

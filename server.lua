@@ -38,12 +38,12 @@ end)
 
 checkers = {}
 
-exports("GetGlobal", function (key, callback)
+exports("GetGlobal", function (key)
   local value = globals[key]
-  pcall(callback, value)
   if debugging then
-    print("GetGlobal(" .. json.encode(key) .. ", callback(" .. json.encode(value) .. "))")
+    print("GetGlobal(" .. json.encode(key) .. "): " .. json.encode(value))
   end
+  return value
 end)
 
 exports("SetGlobal", function (key, value)
@@ -54,7 +54,7 @@ exports("SetGlobal", function (key, value)
   end
 end)
 
-exports("AddGlobalChecker", function(key, checker, callback)
+exports("AddGlobalChecker", function(key, checker)
   if checkers[key] == nil then
     checkers[key] = {}
   end
@@ -63,7 +63,7 @@ exports("AddGlobalChecker", function(key, checker, callback)
   if debugging then
     print("AddGlobalChecker(" .. json.encode(key) .. "): index[" .. tostring(index) .. "]")
   end
-  pcall(callback, index)
+  return index
 end)
 
 exports("RemoveGlobalChecker", function (key, index)
@@ -78,7 +78,7 @@ exports("RemoveGlobalChecker", function (key, index)
   end
 end)
 
-RegisterNetEvent("sc-sync:SetGlobal", function(key, value, index)
+RegisterNetEvent("sc-sync:SetGlobal", function(key, value, id)
   local client = source
   local allowed = true
   if checkers[key] ~= nil then
@@ -94,11 +94,9 @@ RegisterNetEvent("sc-sync:SetGlobal", function(key, value, index)
     globals[key] = value
     TriggerClientEvent("sc-sync:SetGlobal", -1, key, value)
   end
-  if type(index) == "number" then
-    TriggerClientEvent("sc-sync:SetGlobal:Result", client, key, index, allowed)
-  end
+  TriggerClientEvent("sc-sync:SetGlobal:Result:" .. tostring(id), client, allowed)
   if debugging then
-    print("Client[" .. json.encode(client) .. "]: SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. ", " .. json.encode(index) .. "): " .. tostring(allowed))
+    print("Client[" .. json.encode(client) .. "]: SetGlobal(" .. json.encode(key) .. ", " .. json.encode(value) .. ", " .. json.encode(id) .. "): " .. tostring(allowed))
   end
 end)
 
@@ -112,15 +110,15 @@ RegisterNetEvent("sc-sync:InitializePrivate", function()
   end
 end)
 
-exports("GetPrivate", function (client, key, callback)
+exports("GetPrivate", function (client, key)
   local value
   if privates[client] ~= nil then
     value = privates[client][key]
   end
-  pcall(callback, value)
   if debugging then
-    print("GetPrivate(" .. json.encode(client) .. ", " .. json.encode(key) .. ", callback(" .. json.encode(value) .. "))")
+    print("GetPrivate(" .. json.encode(client) .. ", " .. json.encode(key) .. "): " .. json.encode(value))
   end
+  return value
 end)
 
 exports("SetPrivate", function (client, key, value)
