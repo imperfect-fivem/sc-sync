@@ -26,9 +26,8 @@ Control the global values from the server.
 ##### GetGlobal
 Get a global value using a key, example:
 ```lua
-exports["sc-sync"]:GetGlobal("weather", function(weather)
-  print("The weather is: " .. weather)
-end)
+local weather = exports["sc-sync"]:GetGlobal("weather")
+print("The weather is: " .. weather)
 ```
 
 ##### SetGlobal
@@ -73,12 +72,8 @@ end)
 ##### RemoveGlobalChecker
 Remove a checker from a global value using a key and index, example:
 ```lua
-local checker_index
-
-exports["sc-sync"]:AddGlobalChecker("weather", function(src, value)
+local checker_index = exports["sc-sync"]:AddGlobalChecker("weather", function(src, value)
   return GetPlayerName(src) == "Owner" -- this is just for the example, don't use it :)
-end, function(index)
-  checker_index = index
 end)
 
 RegisterCommand("free4all", function()
@@ -93,13 +88,12 @@ Control clients' private values from the server.
 Get a private value of a client using a key and source, example:
 ```lua
 local src = 1 -- any source
-exports["sc-sync"]:GetPrivate(src, "in_task", function(in_task)
-  if in_task then
-    print("player[" .. tostring(src) .. "] is in the task.")
-  else
-    print("player[" .. tostring(src) .. "] isn't in the task.")
-  end
-end)
+local in_task = exports["sc-sync"]:GetPrivate(src, "in_task")
+if in_task then
+  print("player[" .. tostring(src) .. "] is in the task.")
+else
+  print("player[" .. tostring(src) .. "] isn't in the task.")
+end
 ```
 
 ##### SetPrivate
@@ -121,9 +115,8 @@ Control global values from the client.
 ##### GetGlobal
 Get a global value using a key, example:
 ```lua
-exports["sc-sync"]:GetGlobal("weather", function(weather)
-  print("The weather is: " .. weather)
-end)
+local weather = exports["sc-sync"]:GetGlobal("weather")
+print("The weather is: " .. weather)
 ```
 
 ##### SetGlobal
@@ -144,13 +137,12 @@ Control private values from the client.
 ##### GetPrivate
 Get a private value using a key, example:
 ```lua
-exports["sc-sync"]:GetPrivate("in_task", function(in_task)
-  if in_task then
-    print("In the task.")
-  else
-    print("Not in the task.")
-  end
-end)
+local in_task = exports["sc-sync"]:GetPrivate("in_task")
+if in_task then
+  print("In the task.")
+else
+  print("Not in the task.")
+end
 ```
 
 ##### SetPrivate
