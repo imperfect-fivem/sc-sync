@@ -1,8 +1,9 @@
-debugging = false
 debuggers = {
   ["license:xxx000"] = true,
   ["steam:000000"] = true
 }
+
+debugging = false
 
 RegisterCommand("SCSdebug", function(src)
   if src ~= 0 then
