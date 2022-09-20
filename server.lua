@@ -1,4 +1,3 @@
-
 debugging = false
 debuggers = {
   ["license:xxx000"] = true,

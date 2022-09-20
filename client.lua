@@ -1,4 +1,3 @@
-
 debugging = false
 
 RegisterNetEvent("sc-sync:SetDebugStatus", function(allowed)
