@@ -6,7 +6,7 @@ Both the server and the client save the values in a [table](https://www.lua.org/
 Once one of them change the values, it sends an [event](https://docs.fivem.net/docs/scripting-reference/events/) to the other side to update that value.
 There are two types of values:
 - `Globals`: Synchronized values between the server and all clients.
-- `Privates`: Synchronized values between the server and a specific client.
+- `Privates`: Synchronized values between the server and a specific client.  
 Not all the clients are allowed to change a global value But all the clients are always allowed to change their private values.  
 What decide whether a client is allowed to change a global value or not is a server-side [checker](#Checker) added by the developer.
 
