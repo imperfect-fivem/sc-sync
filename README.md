@@ -7,7 +7,7 @@ Once one of them change the values, it sends an [event](https://docs.fivem.net/d
 There are two types of values:
 - `Globals`: Synchronized values between the server and all clients.
 - `Privates`: Synchronized values between the server and a specific client.  
-Not all the clients are allowed to change a global value But all the clients are always allowed to change their private values.  
+Not all the clients are allowed to change a global value but all the clients are always allowed to change their private values.  
 What decide whether a client is allowed to change a global value or not is a server-side [checker](#Checker) added by the developer.
 
 ## Usage
@@ -150,6 +150,3 @@ Set a private value using a key, example:
 ```lua
 exports["sc-sync"]:SetPrivate("in_task", false)
 ```
-
-## TODO
-- Allow specific clients to debug, not all of them.
